@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "test": "parcel index.html",
-    "build": "parcel build index.html"
+    "test": "WASM_PACK_PROFILE=dev parcel index.html",
+    "build": "WASM_PACK_PROFILE=release parcel build index.html"
   },
   "dependencies": {
     "parcel-plugin-wasm.rs": "^1.2.15"

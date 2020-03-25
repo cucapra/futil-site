@@ -35,3 +35,8 @@ npm run test
 ```
 
 The server will automatically refresh if you change any of the JavaScript or Rust code.
+You can build standalone files with:
+
+``` shell
+npm run build
+```
