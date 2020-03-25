@@ -97,6 +97,7 @@ checksum = "1f359dc14ff8911330a51ef78022d376f25ed00248912803b58f00cb1c27f742"
 [[package]]
 name = "calyx"
 version = "0.1.0"
+source = "git+https://github.com/cucapra/futil.git?branch=calyx_lib#1a80c05bc04a840c0f66ba5962d57a5eed891a31"
 dependencies = [
  "atty",
  "better-panic",

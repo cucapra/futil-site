@@ -4,10 +4,8 @@ web demo for the Futil compiler. Futil is compiled to webassembly
 and wrapped in simple javascript that interfaces with the compiler.
 
 ## Building
-**Note:** For now, this repository assumes that it is next to the [Futil repository](https://github.com/cucapra/futil). If you want to change
-this, you will need to edit the `caylx` dependency in `Cargo.toml` to point
-to the right place. In the future, we will ship `calyx` as a Rust crate and
-this won't be a problem.
+
+For now, this repository uses a git checkout of the [Futil repository](https://github.com/cucapra/futil).
 
 ### Setup Build Environment
 
