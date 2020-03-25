@@ -1,4 +1,4 @@
-const js = import("./pkg/futil_site.js");
+const js = import("./src/lib.rs");
 js.then(js => {
     var library_elem = document.getElementById("library");
     var namespace_elem = document.getElementById("namespace");

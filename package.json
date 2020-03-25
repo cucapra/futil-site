@@ -1,13 +1,10 @@
 {
   "scripts": {
-    "test": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "test": "parcel index.html",
+    "build": "parcel build index.html"
   },
   "dependencies": {},
   "devDependencies": {
-    "webpack": "^4.25.1",
-    "webpack-merge": "^4.2.2",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
+    "parcel-bundler": "^1.12.4"
   }
 }
