@@ -1,4 +1,4 @@
-import * as calyx from "./src/lib.rs";
+import * as calyx from "../rust/Cargo.toml";
 
 var library_elem = document.getElementById("library");
 var namespace_elem = document.getElementById("namespace");
