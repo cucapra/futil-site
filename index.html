@@ -9,7 +9,7 @@
             <script src="./index.js"></script>
         </div>
         <div>
-            <textarea id="library" placeholder="library" rows="50" cols="80">
+            <textarea id="library" placeholder="library" rows="30" cols="80">
 (define/library ; std (verilog ../sim/lib/std.v)
   (define/prim std_reg (p_width)
     ((port in p_width)
@@ -95,7 +95,7 @@
     ((port left p_width) (port right p_width) (port valid 1))
     ((port out 1) (port ready 1))))
             </textarea>
-            <textarea id="namespace" placeholder="namespace" rows="50" cols="80">
+            <textarea id="namespace" placeholder="namespace" rows="30" cols="80">
 ; git.status = dirty, build.date = Mon Dec 16 20:53:50 EST 2019, git.hash = 43be196
 (define/namespace prog
   (define/component main () ()

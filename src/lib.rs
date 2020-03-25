@@ -4,16 +4,6 @@ use calyx::{errors, passes, passes::visitor::Visitor};
 use sexpy::Sexpy;
 use wasm_bindgen::prelude::*;
 
-#[wasm_bindgen]
-extern "C" {
-    pub fn alert(s: &str);
-}
-
-#[wasm_bindgen]
-pub fn greet(name: &str) {
-    alert(&format!("Hello, {}!", name));
-}
-
 fn compile(library: &str, namespace: &str) -> Result<String, errors::Error> {
     let namespace_ast = ast::NamespaceDef::parse(namespace)?;
     let lib_ast = lib::Library::parse(library)?;
