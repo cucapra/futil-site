@@ -10,7 +10,9 @@ to the right place. In the future, we will ship `calyx` as a Rust crate and
 this won't be a problem.
 
 ### Setup Build Environment
+
 You need [Rust](https://www.rust-lang.org/install.html) and [Node.js and NPM](https://www.npmjs.com/get-npm) installed.
+To get [WebAssembly support](https://rustwasm.github.io/wasm-pack/book/quickstart.html), the easiest way is to install Rust with [rustup](https://rustup.rs) as opposed to a package manager.
 
 Then install `wasm-pack` with:
 
@@ -26,18 +28,15 @@ npm i
 
 ### Compiling and Testing
 
-First, build the demo with:
+Run a test web server with:
 
 ``` shell
-wasm-pack build
+npm start
 ```
 
-and then run a test web server with:
+The server will automatically refresh if you change any of the JavaScript or Rust code.
+You can build standalone files with:
 
 ``` shell
-npm run serve
+npm run build
 ```
-
-The server will automatically refresh if you change any of the javascript
-sources, but you will need to restart if you recompile the Rust into webassembly.
-
