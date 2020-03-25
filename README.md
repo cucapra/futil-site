@@ -31,7 +31,7 @@ npm i
 Run a test web server with:
 
 ``` shell
-npm run test
+npm start
 ```
 
 The server will automatically refresh if you change any of the JavaScript or Rust code.
