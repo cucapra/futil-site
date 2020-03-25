@@ -1,4 +1,4 @@
-import * as js from "./src/lib.rs";
+import * as js from "./Cargo.toml";
 
 var library_elem = document.getElementById("library");
 var namespace_elem = document.getElementById("namespace");
