@@ -15,5 +15,10 @@ jobs:
             - name: Install wasm-pack
               uses: jetli/wasm-pack-action@v0.2.0
             - run: npm install
+            - name: Cache cargo build
+              uses: actions/cache@v1
+              with:
+                  path: rust/target
+                  key: cargo-build-${{ hashFiles('**/Cargo.lock') }}
             - name: Build
               run: npm run build
