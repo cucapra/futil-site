@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "WASM_PACK_PROFILE=dev parcel index.html",
-    "build": "WASM_PACK_PROFILE=release parcel build index.html",
+    "build": "WASM_PACK_PROFILE=release parcel build index.html --public-url /futil-demo",
     "clean": "rm -rf dist rust/pkg; cd rust; cargo clean",
     "examples": "make examples/data.json"
   },
