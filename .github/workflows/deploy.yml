@@ -29,3 +29,13 @@ jobs:
                   key: cargo-build-${{ hashFiles('**/Cargo.lock') }}
             - name: Build
               run: npm run build
+            - name: Deploy
+              uses: AEnterprise/rsync-deploy@v1.0
+              env:
+                DEPLOY_KEY: ${{ secrets.SERVER_SSH_KEY }}
+                ARGS: "-e -c -r"
+                SERVER_PORT: ${{ secrets.PORT }}
+                FOLDER: "dist/*"
+                SERVER_IP: ${{ secrets.HOST }}
+                USERNAME: ${{ secrets.USERNAME }}
+                SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}
