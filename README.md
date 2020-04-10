@@ -1,4 +1,4 @@
-# Futil Web Demo
+# Futil Web Demo ![Deploy](https://github.com/cucapra/futil-site/workflows/Deploy/badge.svg)
 This uses `calyx` as a library to provide an interactive
 web demo for the Futil compiler. Futil is compiled to webassembly
 and wrapped in simple javascript that interfaces with the compiler.
