@@ -4,7 +4,6 @@ web demo for the Futil compiler. Futil is compiled to webassembly
 and wrapped in simple javascript that interfaces with the compiler.
 
 ## Building
-
 For now, this repository uses a git checkout of the [Futil repository](https://github.com/cucapra/futil).
 
 ### Setup Build Environment
