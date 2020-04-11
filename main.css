@@ -1,0 +1,26 @@
+textarea {
+    background: #eee;
+    border: none;
+    padding: 1em;
+    box-sizing: border-box;
+    font-family: SF Mono, Source Code Pro, Anonymous Pro, Inconsolata,
+        Consolas, monospace;
+    width: 100%;
+}
+
+#input-pane {
+    display: flex;
+    width: 100%;
+}
+
+#library-pane, #program-pane {
+    width: 50%;
+}
+
+#library-pane, #program-pane, #result-pane {
+    padding: 1em;
+}
+
+#compile {
+    float: right;
+}
