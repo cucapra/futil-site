@@ -8,6 +8,6 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
-calyx = { git = "https://github.com/cucapra/futil.git", branch = "calyx_lib" }
-sexpy = "~0.5"
+calyx = { git = "https://github.com/cucapra/futil.git", branch = "master" }
+sexpy = "0.5.4"
 wasm-bindgen = "0.2"
