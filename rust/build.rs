@@ -14,5 +14,5 @@ fn main() {
     let json = format!("{{ \"version\": \"{}\" }}", &git_hash[..8]);
 
     let mut file = File::create("calyx_hash.json").unwrap();
-    file.write_all(json.as_bytes());
+    file.write_all(json.as_bytes()).unwrap();
 }
