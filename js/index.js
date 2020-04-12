@@ -1,5 +1,6 @@
 import * as calyx from "../rust/Cargo.toml";
 import data from "../examples/data.json";
+import calyx_info from "../rust/calyx_hash.json";
 
 var library_elem = document.getElementById("library");
 var examples_elem = document.getElementById("examples");
@@ -24,6 +25,9 @@ examples_select.onchange = function() {
     examples_box.value = examples_select.value;
 };
 
+// set calyx version
+var futil_version_div = document.getElementById("calyx-version");
+futil_version_div.innerHTML = "Built with Calyx version: " + calyx_info.version;
 
 let option;
 for (var i in data.categories) {

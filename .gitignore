@@ -2,3 +2,5 @@ node_modules
 target
 dist
 .cache
+rust/calyx_hash.json
+Cargo.lock

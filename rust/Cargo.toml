@@ -3,6 +3,7 @@ name = "futil-site"
 version = "0.1.0"
 authors = ["Samuel Thomas <sgt43@cornell.edu>"]
 edition = "2018"
+build = "build.rs"
 
 [lib]
 crate-type = ["cdylib"]
@@ -11,3 +12,6 @@ crate-type = ["cdylib"]
 calyx = { git = "https://github.com/cucapra/futil.git", branch = "master" }
 sexpy = "0.5.4"
 wasm-bindgen = "0.2"
+
+[build-dependencies]
+cargo-lock = "4.0.1"
