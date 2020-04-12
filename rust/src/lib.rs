@@ -1,6 +1,11 @@
 use calyx::lang::{ast, context, library::ast as lib};
 use calyx::{backend::traits::Backend, backend::verilog::gen::VerilogBackend};
 use calyx::{errors, passes, passes::visitor::Visitor};
+use passes::{
+    automatic_par::AutomaticPar, collapse_seq::CollapseSeq,
+    lat_insensitive::LatencyInsensitive, redundant_par::RedundantPar,
+    remove_if::RemoveIf,
+};
 use sexpy::Sexpy;
 use wasm_bindgen::prelude::*;
 
@@ -8,15 +13,16 @@ fn compile(library: &str, namespace: &str) -> Result<String, errors::Error> {
     let namespace_ast = ast::NamespaceDef::parse(namespace)?;
     let lib_ast = lib::Library::parse(library)?;
 
-    let context = context::Context::from_ast(namespace_ast, &[lib_ast])?;
+    let ctx = context::Context::from_ast(namespace_ast, &[lib_ast])?;
 
-    passes::lat_insensitive::LatencyInsenstive::do_pass_default(&context)?;
-    passes::redundant_par::RedundantPar::do_pass_default(&context)?;
-    passes::remove_if::RemoveIf::do_pass_default(&context)?;
-    passes::collapse_seq::CollapseSeq::do_pass_default(&context)?;
+    LatencyInsensitive::do_pass_default(&ctx)?;
+    RedundantPar::do_pass_default(&ctx)?;
+    RemoveIf::do_pass_default(&ctx)?;
+    CollapseSeq::do_pass_default(&ctx)?;
+    AutomaticPar::do_pass_default(&ctx)?;
 
     let mut buffer: Vec<u8> = vec![];
-    VerilogBackend::run(&context, &mut buffer)?;
+    VerilogBackend::run(&ctx, &mut buffer)?;
     Ok(String::from_utf8(buffer).unwrap())
 }
 

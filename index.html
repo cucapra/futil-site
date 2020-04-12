@@ -3,24 +3,29 @@
     <head>
         <meta charset="utf-8">
         <title>Futil Demo</title>
+        <link rel="stylesheet" type="text/css" href="main.css">
     </head>
     <body>
-        <div>
-            <script src="js/index.js"></script>
+        <div id="input-pane">
+            <div id="library-pane">
+                <textarea id="library" placeholder="library" rows="30" cols="80">
+                </textarea>
+                <select id="library-select">
+                </select>
+            </div>
+            <div id="program-pane">
+                <textarea id="examples" placeholder="examples" rows="30" cols="80">
+                </textarea>
+                <select id="examples-select">
+                </select>
+                <button type="button" id="compile">Compile</button>
+            </div>
         </div>
-        <div>
-            <textarea id="library" placeholder="library" rows="30" cols="80">
-            </textarea>
-            <select id="library-select">
-            </select>
-            <textarea id="examples" placeholder="examples" rows="30" cols="80">
-            </textarea>
-            <select id="examples-select">
-            </select>
+        <div id="result-pane">
+            <textarea id="output" rows="40" cols="160"></textarea></div>
         </div>
-        <div>
-            <button type="button" id="compile">Compile</button>
-        </div>
-        <textarea id="output" rows="40" cols="160"></textarea></div>
     </body>
+
+    <script src="js/index.js"></script>
+    <script src="examples/data.json"></script>
 </html>
