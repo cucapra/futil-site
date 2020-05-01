@@ -7,25 +7,27 @@
     </head>
     <body>
         <div id="input-pane">
-            <div id="library-pane">
-                <textarea id="library" placeholder="library" rows="30" cols="80">
-                </textarea>
-                <select id="library-select">
-                </select>
-            </div>
             <div id="program-pane">
-                <textarea id="examples" placeholder="examples" rows="30" cols="80">
+                <textarea id="examples" placeholder="examples" rows="30">
                 </textarea>
                 <select id="examples-select">
                 </select>
                 <button type="button" id="compile">Compile</button>
             </div>
+            <div id="library-pane">
+                <textarea id="library" placeholder="library" rows="3">
+                </textarea>
+                <select id="library-select">
+                </select>
+            </div>
         </div>
         <div id="result-pane">
-            <textarea id="output" rows="40" cols="160"></textarea></div>
+            <div id="compile-output-pane">
+                <textarea id="output" rows="40"></textarea>
+            </div>
+            <div id="dot-pane"></div>
         </div>
         <div id="calyx-version"></div>
     </body>
-
     <script src="js/index.js"></script>
 </html>
