@@ -5,7 +5,7 @@
             "name": "library",
             "items": [
                 {
-                    "name": "Standard",
+                    "name": "Core",
                     "file": "primitives/core.futil"
                 }
             ]
@@ -24,6 +24,10 @@
                 {
                     "name": "If",
                     "file": "tests/correctness/if.futil"
+                },
+                {
+                    "name": "Infer",
+                    "file": "tests/passes/infer-static-timing.futil"
                 }
             ]
         }

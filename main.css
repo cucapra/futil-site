@@ -8,30 +8,28 @@ textarea {
     width: 100%;
 }
 
-#input-pane {
+.column-1 {
+    width: 100%;
+    padding: 0 0.5em;
+}
+
+.column-2 {
+    width: 50%;
+    padding: 0 0.5em;
+}
+
+.row {
     display: flex;
     width: 90%;
     margin: 0 auto;
-}
-
-#library-pane, #program-pane {
-    width: 50%;
-}
-
-#library-pane, #program-pane, #compile-output-pane, #dot-pane {
-    padding: 1em;
-}
-
-#result-pane {
-    display: flex;
-    width: 90%;
-    margin: 0 auto;
-}
-
-#compile-output-pane, #dot-pane {
-    width: 50%;
 }
 
 #compile {
     float: right;
+}
+
+#output {
+    white-space: pre-wrap;
+    font-family: SF Mono, Source Code Pro, Anonymous Pro, Inconsolata,
+                 Consolas, monospace;
 }

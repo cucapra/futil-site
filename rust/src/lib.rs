@@ -15,7 +15,7 @@ fn compile(library: &str, namespace: &str) -> Result<String, errors::Error> {
     // Build the IR representation
     let mut rep = ir::from_ast::ast_to_ir(namespace_ast, false, false)?;
 
-    passes::StaticTiming::do_pass_default(&mut rep)?;
+    passes::InferStaticTiming::do_pass_default(&mut rep)?;
 
     let mut buffer: Vec<u8> = vec![];
     for comp in &rep.components {
@@ -28,6 +28,6 @@ fn compile(library: &str, namespace: &str) -> Result<String, errors::Error> {
 pub fn run(library: &str, namespace: &str) -> String {
     match compile(library, namespace) {
         Ok(s) => s,
-        Err(e) => format!("{:?}", e),
+        Err(e) => format!("Error:\n{:?}", e),
     }
 }

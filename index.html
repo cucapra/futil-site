@@ -4,28 +4,25 @@
         <meta charset="utf-8">
         <title>Futil Demo</title>
         <link rel="stylesheet" type="text/css" href="main.css">
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
     </head>
     <body>
-        <div id="input-pane">
-            <div id="program-pane">
-                <textarea id="examples" placeholder="examples" rows="30">
-                </textarea>
-                <select id="examples-select">
-                </select>
-                <button type="button" id="compile">Compile</button>
+        <div class="row">
+            <div id="library-pane" class="column-2">
+                <select id="library-select"></select>
+                <textarea id="library" placeholder="library" rows="5"></textarea>
             </div>
-            <div id="library-pane">
-                <textarea id="library" placeholder="library" rows="3">
-                </textarea>
-                <select id="library-select">
-                </select>
+            <div id="program-pane" class="column-2">
+                <select id="examples-select"></select>
+                <textarea id="examples" placeholder="examples" rows="5"></textarea>
             </div>
         </div>
-        <div id="result-pane">
-            <div id="compile-output-pane">
-                <textarea id="output" rows="40"></textarea>
-            </div>
-            <div id="dot-pane"></div>
+        <div class="row">
+            <div id="output" class="column-1"></div>
+        </div>
+        <div class="row">
+            <div id="diff-pane" class="column-1"></div>
         </div>
         <div id="calyx-version"></div>
     </body>

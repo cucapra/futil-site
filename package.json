@@ -5,7 +5,10 @@
         "clean": "rm -rf dist rust/pkg; cd rust; cargo clean",
         "examples": "make examples/data.json"
     },
-    "dependencies": {},
+    "dependencies": {
+        "diff": "^5.0.0",
+        "diff2html": "^3.1.18"
+    },
     "devDependencies": {
         "parcel-bundler": "^1.12.4",
         "parcel-plugin-wasm.rs": "^1.2.16"
