@@ -1,13 +1,13 @@
 {
-  "scripts": {
-    "start": "WASM_PACK_PROFILE=dev parcel index.html",
-    "build": "cd rust; cargo build; cd ..; WASM_PACK_PROFILE=release parcel build index.html --public-url /futil-demo --log-level 4",
-    "clean": "rm -rf dist rust/pkg; cd rust; cargo clean",
-    "examples": "make examples/data.json"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-wasm.rs": "^1.2.15"
-  }
+    "scripts": {
+        "start": "WASM_PACK_PROFILE=dev parcel index.html",
+        "build": "cd rust; cargo build; cd ..; WASM_PACK_PROFILE=release parcel build index.html --public-url /futil-demo --log-level 4",
+        "clean": "rm -rf dist rust/pkg; cd rust; cargo clean",
+        "examples": "make examples/data.json"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "parcel-bundler": "^1.12.4",
+        "parcel-plugin-wasm.rs": "^1.2.16"
+    }
 }

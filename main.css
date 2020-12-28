@@ -10,15 +10,26 @@ textarea {
 
 #input-pane {
     display: flex;
-    width: 100%;
+    width: 90%;
+    margin: 0 auto;
 }
 
 #library-pane, #program-pane {
     width: 50%;
 }
 
-#library-pane, #program-pane, #result-pane {
+#library-pane, #program-pane, #compile-output-pane, #dot-pane {
     padding: 1em;
+}
+
+#result-pane {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+}
+
+#compile-output-pane, #dot-pane {
+    width: 50%;
 }
 
 #compile {

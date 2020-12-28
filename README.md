@@ -14,7 +14,7 @@ To get [WebAssembly support](https://rustwasm.github.io/wasm-pack/book/quickstar
 Then install `wasm-pack` with:
 
 ``` shell
-cargo install wasm-pack
+cargo install wasm-pack wasm-bindgen-cli
 ```
 
 Now you are ready to build and run the web demo. First, install the `npm` dependencies with:
