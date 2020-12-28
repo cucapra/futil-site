@@ -7,7 +7,9 @@ use calyx::{
 use wasm_bindgen::prelude::*;
 
 fn compile(library: &str, namespace: &str) -> Result<String, errors::Error> {
-    let namespace_ast = parser::FutilParser::parse(namespace.as_bytes())?;
+    let namespace_ast = parser::FutilParser::parse(
+        (library.to_string() + namespace).as_bytes(),
+    )?;
     // let lib_ast = lib::Library::parse(library)?;
 
     // Build the IR representation
@@ -23,7 +25,6 @@ fn compile(library: &str, namespace: &str) -> Result<String, errors::Error> {
 }
 
 #[wasm_bindgen]
-#[no_mangle]
 pub fn run(library: &str, namespace: &str) -> String {
     match compile(library, namespace) {
         Ok(s) => s,

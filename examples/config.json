@@ -1,51 +1,31 @@
 {
-  "url_prefix": "https://raw.githubusercontent.com/cucapra/futil/master/",
-  "categories": [
-    {
-      "name": "library",
-      "items": [
+    "url_prefix": "https://raw.githubusercontent.com/cucapra/futil/master/",
+    "categories": [
         {
-          "name": "Standard",
-          "file": "primitives/std.lib"
+            "name": "library",
+            "items": [
+                {
+                    "name": "Standard",
+                    "file": "primitives/core.futil"
+                }
+            ]
         },
         {
-          "name": "Test",
-          "file": "primitives/sample.lib"
+            "name": "examples",
+            "items": [
+                {
+                    "name": "Seq",
+                    "file": "tests/correctness/seq.futil"
+                },
+                {
+                    "name": "Par",
+                    "file": "tests/correctness/par.futil"
+                },
+                {
+                    "name": "If",
+                    "file": "tests/correctness/if.futil"
+                }
+            ]
         }
-      ]
-    },
-    {
-      "name": "examples",
-      "items": [
-        {
-          "name": "Seq",
-          "file": "tests/integration/seq.futil"
-        },
-        {
-          "name": "Par",
-          "file": "tests/integration/par.futil"
-        },
-        {
-          "name": "Counter",
-          "file": "tests/integration/counter.futil"
-        },
-        {
-          "name": "Fibonacci",
-          "file": "tests/integration/fib.futil"
-        },
-        {
-          "name": "If Seq",
-          "file": "tests/integration/ifseq.futil"
-        },
-        {
-          "name": "Simple",
-          "file": "tests/integration/simple.futil"
-        },
-        {
-          "name": "While Seq",
-          "file": "tests/integration/while-seq.futil"
-        }
-      ]
-    }
-  ]
+    ]
 }

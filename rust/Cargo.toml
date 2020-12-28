@@ -8,6 +8,8 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
-# calyx = { git = "https://github.com/cucapra/futil.git", branch = "master" }
-calyx = { path = "../../futil/calyx" }
+calyx = { git = "https://github.com/cucapra/futil.git", branch = "demo" }
 wasm-bindgen = "0.2.69"
+
+[build-dependencies]
+cargo-lock = "4.0.1"
