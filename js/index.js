@@ -16,17 +16,17 @@ lib_select.onchange = function() {
 };
 
 function compile() {
-    // output.value = "Compiling...";
     var compiled = calyx.run(library_elem.value, examples_elem.value);
+    // clear panes
+    output.innerHTML = "";
+    document.getElementById('diff-pane').innerHTML = "";
     if (compiled.startsWith("Error:")) {
-        output.appendChild(document.createTextNode(compiled));
-        document.getElementById('diff-pane').innerHTML = "";
+        output.innerText = compiled;
     } else {
         var diff = Diff.createTwoFilesPatch("input", "input", examples_elem.value, compiled);
         const diffHtml = Diff2Html.html(diff,
             { drawFileList: false, matching: 'lines', outputFormat: 'side-by-side' }
         );
-        output.innerHTML = "";
         document.getElementById('diff-pane').innerHTML = diffHtml;
     }
 
