@@ -18,12 +18,18 @@
             </div>
         </div>
         <div class="row">
+            <div id="passes" class="column-1"></div>
+        </div>
+        <div class="row">
             <select id="examples-select"></select>
             <button id="compile">Compile</button>
         </div>
         <div class="row editor">
             <div id="program-pane" class="column-2">
-                <div id="editor" class="language-futil" contenteditable="true"></div>
+                <div id="editor"
+                     class="language-futil"
+                     contenteditable="true"
+                     spellcheck="false"></div>
             </div>
             <div id="compiled-pane" class="column-2">
                 <div id="compiled" class="language-futil" contenteditable="false"></div>

@@ -1,9 +1,10 @@
 import * as calyx from "../rust/Cargo.toml";
 import data from "../examples/data.json";
+import passes from "../data/passes.json";
 import calyx_info from "../rust/calyx_hash.json";
 import * as Diff from 'diff';
-import { CodeJar } from 'codejar';
-import { withLineNumbers } from 'codejar/linenumbers';
+// import { CodeJar } from 'codejar';
+// import { withLineNumbers } from 'codejar/linenumbers';
 import Prism from 'prismjs';
 import './prism-futil.js';
 require('prismjs/plugins/keep-markup/prism-keep-markup');
@@ -15,6 +16,30 @@ var lib_select = document.getElementById("library-select");
 lib_select.onchange = function() {
     library_code = lib_select.value;
 };
+
+function createToggle(pass) {
+    let button = document.createElement("button");
+    button.classList.add("toggle");
+    button.classList.add("off");
+    button.innerHTML = pass.title;
+    button.onclick = function() {
+        if (button.classList.contains("on")) {
+            button.classList.replace("on", "off");
+            pass.active = false;
+        } else {
+            button.classList.replace("off", "on");
+            pass.active = true;
+        }
+        compile();
+    };
+    return button;
+}
+
+let passDiv = document.getElementById("passes");
+for (let pass of passes.passes) {
+    let button = createToggle(pass);
+    passDiv.appendChild(button);
+}
 
 // var editor_div = document.getElementById("editor");
 // const editor = new CodeJar(
@@ -38,55 +63,65 @@ button.onclick = function() {
 //     { tab: '\t' }
 // );
 
-function filterDiff(input, prefix) {
-    var lines = [];
-    let hunk = input.hunks[0];
-    console.log(hunk);
-    // for (let i = 0; i < hunk.oldLines; i++) {
-    for (let l of hunk.lines) {
-        // let l = hunk.lines[i];
-        if (l.length > 0) {
-            let symbol = l[0];
-            let content = l.slice(1, l.length);
-            if (symbol == prefix) {
-                lines.push(content);
-                // lines.push(l);
-            } else if (symbol == ' ') {
-                // lines.push("--space--");
-                lines.push(content);
-            } else if (symbol == '\\') {
-                // console.log("prefix " + symbol);
-                // do nothing
-            } else {
-                if (content.length == 0) {
-                    lines.push('');
-                } else if (content.trim().startsWith("//")) {
-                    lines.push('');
-                } else {
-                    lines.push(`${symbol}${content.slice(1, l.length)}`);
-                }
-            }
+// function filterDiff(input, prefix) {
+//     var lines = [];
+//     let hunk = input.hunks[0];
+//     console.log(hunk);
+//     // for (let i = 0; i < hunk.oldLines; i++) {
+//     for (let l of hunk.lines) {
+//         // let l = hunk.lines[i];
+//         if (l.length > 0) {
+//             let symbol = l[0];
+//             let content = l.slice(1, l.length);
+//             if (symbol == prefix) {
+//                 lines.push(content);
+//                 // lines.push(l);
+//             } else if (symbol == ' ') {
+//                 // lines.push("--space--");
+//                 lines.push(content);
+//             } else if (symbol == '\\') {
+//                 // console.log("prefix " + symbol);
+//                 // do nothing
+//             } else {
+//                 if (content.length == 0) {
+//                     lines.push('');
+//                 } else if (content.trim().startsWith("//")) {
+//                     lines.push('');
+//                 } else {
+//                     lines.push(`${symbol}${content.slice(1, l.length)}`);
+//                 }
+//             }
+//         }
+//     }
+//     // console.log(hunk.lines.slice(hunk.oldLines, hunk.lines.length));
+//     // lines = lines.concat(hunk.lines.slice(hunk.oldLines, hunk.lines.length));
+//     return lines.join('\n');
+// }
+
+function getActivePasses() {
+    let list = [];
+    for (let p of passes.passes) {
+        if (p.active) {
+            list.push(p.name);
         }
     }
-    // console.log(hunk.lines.slice(hunk.oldLines, hunk.lines.length));
-    // lines = lines.concat(hunk.lines.slice(hunk.oldLines, hunk.lines.length));
-    return lines.join('\n');
+    return list;
 }
 
 function compile() {
+    let passList = getActivePasses();
+    console.log(passList);
     // let code = editor.toString();
     let code = document.getElementById("editor").innerText;
-    console.log(code);
 
     code = code.replaceAll(/^\+.*\n/mg, '');
     code = code.replaceAll(/^-.*$/mg, '');
-    var str = calyx.run(library_code, code);
+    var str = calyx.run(passList, library_code, code);
 
     if (str.startsWith("Error:")) {
         document.getElementById("compiled").innerHTML = str;
     } else {
         let lineDiff = Diff.diffLines(code, str);
-        console.log(lineDiff);
         let compiledStr = document.getElementById("compiled");
         compiledStr.innerHTML = "";
         let editorStr = document.getElementById("editor");
@@ -103,13 +138,23 @@ function compile() {
                 span.innerHTML = change.value;
                 span.classList = 'token diff-addition';
                 compiledStr.appendChild(span);
-                let commentStr = "\n".repeat(change.count);
-                editorStr.append(document.createTextNode(commentStr));
+                if (change.count > 0) {
+                    let commentStr = "\n".repeat(change.count);
+                    editorStr.append(document.createTextNode(commentStr));
+                } else {
+                    // let commentStr = "\n".repeat(Math.abs(change.count));
+                    // compiledStr.append(document.createTextNode(commentStr));
+                }
             } else {
                 // check if next item is an addition
                 if (i + 1 < lineDiff.length && lineDiff[i + 1].added) {
                     let next = lineDiff[i + 1];
-                    compiledStr.appendChild(document.createTextNode('\n'.repeat(change.count - next.count)));
+                    let count = change.count - next.count;
+                    if (count > 0) {
+                        compiledStr.appendChild(document.createTextNode('\n'.repeat(count)));
+                    } else {
+                        // editorStr.appendChild(document.createTextNode('\n'.repeat(Math.abs(count))));
+                    }
                     let wordDiff = Diff.diffWordsWithSpace(change.value, next.value);
                     for (let change of wordDiff) {
                         if (change.added == null && change.removed == null) {
@@ -133,7 +178,11 @@ function compile() {
                     span.innerHTML = change.value;
                     span.classList = 'token diff-deletion';
                     editorStr.appendChild(span);
-                    compiledStr.appendChild(document.createTextNode("\n".repeat(change.count)));
+                    if (change.count > 0) {
+                        compiledStr.appendChild(document.createTextNode("\n".repeat(change.count)));
+                    } else {
+                        // editorStr.appendChild(document.createTextNode("\n".repeat(change.count)));
+                    }
                 }
 
 

@@ -53,3 +53,27 @@ textarea {
 .token.diff-deletion {
     background: hsla(0,100%,75%,0.3);;
 }
+
+.toggle {
+    background: white;
+    color: black;
+    border: 2px solid green;
+    border-radius: 2px;
+    padding: 0.4em;
+    margin: 0.4em 0.4em;
+}
+
+.toggle.on {
+    background: green;
+    color: white;
+}
+
+.toggle.off {
+    background: white;
+}
+
+
+.toggle:hover {
+    background: rgba(0, 200, 50, 0.7);
+    color: white;
+}
