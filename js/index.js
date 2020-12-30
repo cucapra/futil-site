@@ -6,6 +6,7 @@ import { CodeJar } from 'codejar';
 import { withLineNumbers } from 'codejar/linenumbers';
 import Prism from 'prismjs';
 import './prism-futil.js';
+require('prismjs/plugins/keep-markup/prism-keep-markup');
 
 var button = document.getElementById("compile");
 
@@ -15,27 +16,27 @@ lib_select.onchange = function() {
     library_code = lib_select.value;
 };
 
-var editor_div = document.getElementById("editor");
-const editor = new CodeJar(
-    editor_div,
-    withLineNumbers(Prism.highlightElement),
-    { tab: '\t' }
-);
+// var editor_div = document.getElementById("editor");
+// const editor = new CodeJar(
+//     editor_div,
+//     withLineNumbers(Prism.highlightElement),
+//     { tab: '\t' }
+// );
 
 button.onclick = function() {
-    compile(editor.toString());
+    compile();
 };
 
 // editor.onUpdate((code) => {
 //     compile(code);
 // });
 
-var compiled_div = document.getElementById("compiled");
-const compiled = new CodeJar(
-    compiled_div,
-    withLineNumbers(Prism.highlightElement),
-    { tab: '\t' }
-);
+// var compiled_div = document.getElementById("compiled");
+// const compiled = new CodeJar(
+//     compiled_div,
+//     withLineNumbers(Prism.highlightElement),
+//     { tab: '\t' }
+// );
 
 function filterDiff(input, prefix) {
     var lines = [];
@@ -57,7 +58,6 @@ function filterDiff(input, prefix) {
                 // console.log("prefix " + symbol);
                 // do nothing
             } else {
-                console.log("prefix " + symbol);
                 if (content.length == 0) {
                     lines.push('');
                 } else if (content.trim().startsWith("//")) {
@@ -73,20 +73,86 @@ function filterDiff(input, prefix) {
     return lines.join('\n');
 }
 
-function compile(code) {
-    code = code.replaceAll(/^\+.*\n/mg, '');
+function compile() {
+    // let code = editor.toString();
+    let code = document.getElementById("editor").innerText;
     console.log(code);
+
+    code = code.replaceAll(/^\+.*\n/mg, '');
     code = code.replaceAll(/^-.*$/mg, '');
     var str = calyx.run(library_code, code);
 
     if (str.startsWith("Error:")) {
-        compiled.updateCode(str);
+        document.getElementById("compiled").innerHTML = str;
     } else {
-        var diff = Diff.structuredPatch("input", "input", code, str, null, null, {
-            "context": code.split("\n").length,
-        });
-        compiled.updateCode(filterDiff(diff, '+'));
-        editor.updateCode(filterDiff(diff, '-'));
+        let lineDiff = Diff.diffLines(code, str);
+        console.log(lineDiff);
+        let compiledStr = document.getElementById("compiled");
+        compiledStr.innerHTML = "";
+        let editorStr = document.getElementById("editor");
+        editorStr.innerHTML = "";
+        for (let i = 0; i < lineDiff.length; i++) {
+            let change = lineDiff[i];
+            if (change.added == null && change.removed == null) {
+                compiledStr.appendChild(
+                    document.createTextNode(change.value)
+                );
+                editorStr.appendChild(document.createTextNode(change.value));
+            } else if (change.added) {
+                let span = document.createElement('span');
+                span.innerHTML = change.value;
+                span.classList = 'token diff-addition';
+                compiledStr.appendChild(span);
+                let commentStr = "\n".repeat(change.count);
+                editorStr.append(document.createTextNode(commentStr));
+            } else {
+                // check if next item is an addition
+                if (i + 1 < lineDiff.length && lineDiff[i + 1].added) {
+                    let next = lineDiff[i + 1];
+                    compiledStr.appendChild(document.createTextNode('\n'.repeat(change.count - next.count)));
+                    let wordDiff = Diff.diffWordsWithSpace(change.value, next.value);
+                    for (let change of wordDiff) {
+                        if (change.added == null && change.removed == null) {
+                            editorStr.appendChild(document.createTextNode(change.value));
+                            compiledStr.appendChild(document.createTextNode(change.value));
+                        } else if (change.added) {
+                            let span = document.createElement('span');
+                            span.innerHTML = change.value;
+                            span.classList = 'token diff-addition';
+                            compiledStr.appendChild(span);
+                        } else if (change.removed) {
+                            let span = document.createElement('span');
+                            span.innerHTML = change.value;
+                            span.classList = 'token diff-deletion';
+                            editorStr.appendChild(span);
+                        }
+                    }
+                    i++;
+                } else {
+                    let span = document.createElement('span');
+                    span.innerHTML = change.value;
+                    span.classList = 'token diff-deletion';
+                    editorStr.appendChild(span);
+                    compiledStr.appendChild(document.createTextNode("\n".repeat(change.count)));
+                }
+
+
+                // if (change.value.includes("\n")) {
+                //     compiledStr.append(document.createTextNode(change.value));
+                // }
+                // console.log(change);
+            }
+        }
+
+        Prism.highlightElement(document.getElementById('editor'));
+        Prism.highlightElement(document.getElementById('compiled'));
+        // compiled.updateCode(compiledStr);
+
+        // var diff = Diff.structuredPatch("input", "input", code, str, null, null, {
+        //     "context": code.split("\n").length,
+        // });
+        // compiled.updateCode(filterDiff(diff, '+'));
+        // editor.updateCode(filterDiff(diff, '-'));
     }
 
     // editor.updateCode(str);
@@ -102,8 +168,9 @@ function compile(code) {
 // var examples_box = document.getElementById("examples");
 var examples_select = document.getElementById("examples-select");
 examples_select.onchange = function() {
-    editor.updateCode(examples_select.value);
-    compile(editor.toString());
+    // editor.updateCode(examples_select.value);
+    document.getElementById("editor").innerHTML = examples_select.value;
+    compile();
 };
 
 // examples_box.oninput = function() {

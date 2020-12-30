@@ -44,6 +44,7 @@ textarea {
     letter-spacing: normal;
     line-height: 20px;
     padding: 10px;
+    white-space: pre;
 }
 
 .token.diff-addition {
