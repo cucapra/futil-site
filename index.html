@@ -4,18 +4,29 @@
         <meta charset="utf-8">
         <title>Futil Demo</title>
         <link rel="stylesheet" type="text/css" href="main.css">
+        <link rel="stylesheet" type="text/css" href="style/prism-futil.css">
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
     </head>
     <body>
         <div class="row">
-            <div id="library-pane" class="column-2">
-                <select id="library-select"></select>
-                <textarea id="library" placeholder="library" rows="5"></textarea>
+            <div id="calyx-version" class="column-1"></div>
+        </div>
+        <div class="row">
+            <div id="library-pane" class="column-1">
+                Select Library: <select id="library-select"></select>
             </div>
+        </div>
+        <div class="row">
+            <select id="examples-select"></select>
+            <button id="compile">Compile</button>
+        </div>
+        <div class="row editor">
             <div id="program-pane" class="column-2">
-                <select id="examples-select"></select>
-                <textarea id="examples" placeholder="examples" rows="5"></textarea>
+                <div id="editor" class="language-futil"></div>
+            </div>
+            <div id="compiled-pane" class="column-2">
+                <div id="compiled" class="language-futil" contenteditable="false"></div>
             </div>
         </div>
         <div class="row">
@@ -24,7 +35,6 @@
         <div class="row">
             <div id="diff-pane" class="column-1"></div>
         </div>
-        <div id="calyx-version"></div>
     </body>
     <script src="js/index.js"></script>
 </html>

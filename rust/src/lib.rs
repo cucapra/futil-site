@@ -16,6 +16,7 @@ fn compile(library: &str, namespace: &str) -> Result<String, errors::Error> {
     let mut rep = ir::from_ast::ast_to_ir(namespace_ast, false, false)?;
 
     passes::InferStaticTiming::do_pass_default(&mut rep)?;
+    passes::StaticTiming::do_pass_default(&mut rep)?;
 
     let mut buffer: Vec<u8> = vec![];
     for comp in &rep.components {

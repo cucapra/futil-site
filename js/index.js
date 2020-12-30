@@ -1,47 +1,114 @@
 import * as calyx from "../rust/Cargo.toml";
 import data from "../examples/data.json";
 import calyx_info from "../rust/calyx_hash.json";
-import * as Diff2Html from 'diff2html';
 import * as Diff from 'diff';
+import { CodeJar } from 'codejar';
+import { withLineNumbers } from 'codejar/linenumbers';
+import Prism from 'prismjs';
+import './prism-futil.js';
 
-var library_elem = document.getElementById("library");
-var examples_elem = document.getElementById("examples");
-// var button = document.getElementById("compile");
-var output = document.getElementById("output");
+var button = document.getElementById("compile");
 
-var lib_box = document.getElementById("library");
+var library_code = "";
 var lib_select = document.getElementById("library-select");
 lib_select.onchange = function() {
-    lib_box.value = lib_select.value;
+    library_code = lib_select.value;
 };
 
-function compile() {
-    var compiled = calyx.run(library_elem.value, examples_elem.value);
-    // clear panes
-    output.innerHTML = "";
-    document.getElementById('diff-pane').innerHTML = "";
-    if (compiled.startsWith("Error:")) {
-        output.innerText = compiled;
-    } else {
-        var diff = Diff.createTwoFilesPatch("input", "input", examples_elem.value, compiled);
-        const diffHtml = Diff2Html.html(diff,
-            { drawFileList: false, matching: 'lines', outputFormat: 'side-by-side' }
-        );
-        document.getElementById('diff-pane').innerHTML = diffHtml;
+var editor_div = document.getElementById("editor");
+const editor = new CodeJar(
+    editor_div,
+    withLineNumbers(Prism.highlightElement),
+    { tab: '\t' }
+);
+
+button.onclick = function() {
+    compile(editor.toString());
+};
+
+// editor.onUpdate((code) => {
+//     compile(code);
+// });
+
+var compiled_div = document.getElementById("compiled");
+const compiled = new CodeJar(
+    compiled_div,
+    withLineNumbers(Prism.highlightElement),
+    { tab: '\t' }
+);
+
+function filterDiff(input, prefix) {
+    var lines = [];
+    let hunk = input.hunks[0];
+    console.log(hunk);
+    // for (let i = 0; i < hunk.oldLines; i++) {
+    for (let l of hunk.lines) {
+        // let l = hunk.lines[i];
+        if (l.length > 0) {
+            let symbol = l[0];
+            let content = l.slice(1, l.length);
+            if (symbol == prefix) {
+                lines.push(content);
+                // lines.push(l);
+            } else if (symbol == ' ') {
+                // lines.push("--space--");
+                lines.push(content);
+            } else if (symbol == '\\') {
+                // console.log("prefix " + symbol);
+                // do nothing
+            } else {
+                console.log("prefix " + symbol);
+                if (content.length == 0) {
+                    lines.push('');
+                } else if (content.trim().startsWith("//")) {
+                    lines.push('');
+                } else {
+                    lines.push(`${symbol}${content.slice(1, l.length)}`);
+                }
+            }
+        }
     }
+    // console.log(hunk.lines.slice(hunk.oldLines, hunk.lines.length));
+    // lines = lines.concat(hunk.lines.slice(hunk.oldLines, hunk.lines.length));
+    return lines.join('\n');
+}
+
+function compile(code) {
+    code = code.replaceAll(/^\+.*\n/mg, '');
+    console.log(code);
+    code = code.replaceAll(/^-.*$/mg, '');
+    var str = calyx.run(library_code, code);
+
+    if (str.startsWith("Error:")) {
+        compiled.updateCode(str);
+    } else {
+        var diff = Diff.structuredPatch("input", "input", code, str, null, null, {
+            "context": code.split("\n").length,
+        });
+        compiled.updateCode(filterDiff(diff, '+'));
+        editor.updateCode(filterDiff(diff, '-'));
+    }
+
+    // editor.updateCode(str);
+    // const diffHtml = Diff2Html.html(diff,
+    //     { drawFileList: false, matching: 'lines' }
+    // );
+    // compiled_div.innerHTML = diffHtml;
+    // compiled.updateCode(diff);
+    // document.getElementById('diff-pane').innerHTML = "";
 
 }
 
-var examples_box = document.getElementById("examples");
+// var examples_box = document.getElementById("examples");
 var examples_select = document.getElementById("examples-select");
 examples_select.onchange = function() {
-    examples_box.value = examples_select.value;
-    compile();
+    editor.updateCode(examples_select.value);
+    compile(editor.toString());
 };
 
-examples_box.oninput = function() {
-    compile();
-};
+// examples_box.oninput = function() {
+//     compile();
+// };
 
 // set calyx version
 var futil_version_div = document.getElementById("calyx-version");
