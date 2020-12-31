@@ -11,15 +11,16 @@ Prism.languages.futil = {
     'string': {
         pattern: /(["])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
         greedy: true
-    }, 'toplevel': {
+    },
+    'namespace': {
         pattern: /\b(?:extern|component)\b/,
         lookbehind: true,
     },
-    'segments': {
+    'function': {
         pattern: /\b(?:cells|wires|control)\b/,
         lookbehind: true,
     },
-    'operators': {
+    'keyword': {
         pattern: /\b(?:prim|group|seq|par|if|while|with)\b/,
         lookbehind: true,
     },

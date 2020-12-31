@@ -47,7 +47,7 @@ fn compile(
     register!(pm, ClkInsertion);
 
     let namespace_ast = parser::FutilParser::parse(
-        (library.to_string() + namespace).as_bytes(),
+        (library.to_string() + "\n" + namespace).as_bytes(),
     )?;
 
     // Build the IR representation

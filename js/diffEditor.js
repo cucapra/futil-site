@@ -1,7 +1,8 @@
 import * as Diff from 'diff';
 import Prism from 'prismjs';
 import './prism-futil.js';
-require('prismjs/plugins/keep-markup/prism-keep-markup');
+import 'prismjs/plugins/keep-markup/prism-keep-markup';
+import 'prismjs/plugins/line-numbers/prism-line-numbers';
 
 function wordDiff(diff, next, srcDiv, destDiv) {
     // if diffs cover different number of lines,
@@ -30,7 +31,6 @@ function wordDiff(diff, next, srcDiv, destDiv) {
             srcDiv.appendChild(span);
         }
     }
-
 }
 
 function lineDiff(diff, srcDiv, destDiv) {

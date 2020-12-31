@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title>Futil Demo</title>
         <link rel="stylesheet" type="text/css" href="main.css">
-        <link rel="stylesheet" type="text/css" href="style/prism-futil.css">
+        <link rel="stylesheet" type="text/css" href="style/prism-solarizedlight.css">
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
     </head>
@@ -20,16 +20,22 @@
         <div class="row">
             <div id="passes" class="column-1"></div>
         </div>
-        <div class="row">
+        <div id="diffEditor" class="editor language-futil center compact">
             <select id="examples-select"></select>
             <button id="compile">Compile</button>
-        </div>
-        <div id="diffEditor" class="row editor">
-            <div id="input"
-                    class="language-futil column-2"
-                    contenteditable="true"
-                    spellcheck="false"></div>
-            <div id="output" class="language-futil column-2" contenteditable="false"></div>
+            <div class="row">
+                <pre id="input"
+                     class="left"
+                     contenteditable="true"
+                     spellcheck="false">
+                    <code></code>
+                </pre>
+                <pre id="output"
+                     class="right"
+                     contenteditable="false">
+                    <code></code>
+                </pre>
+            </div>
         </div>
         <div class="row">
             <div id="output" class="column-1"></div>
