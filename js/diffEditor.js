@@ -83,6 +83,29 @@ function lineDiff(diff, srcDiv, destDiv) {
     }
 }
 
+export function wrapLines(elem) {
+    let text = elem.innerHTML + "\n";
+    let html = text.matchAll(/^.*\n/mg);
+    // console.log(Array.from(html));
+    // html = text.matchAll(/^.*\n/mg);
+    elem.innerHTML = "";
+    for (let line of html) {
+        let span = document.createElement("span");
+        span.innerHTML = line;
+        span.classList.add("line");
+        elem.appendChild(span);
+    }
+}
+
+function liftStyleToLine(elem, style) {
+    for (let span of elem.querySelectorAll(".line")) {
+        // console.log(span);
+        if (span.innerHTML.includes(style)) {
+            span.classList.add(style);
+        }
+    }
+}
+
 export function updateDiffEditor(editor, sourceCode, compiledCode) {
     let srcDiv = editor.querySelector("#input");
     let destDiv = editor.querySelector("#output");
@@ -97,5 +120,11 @@ export function updateDiffEditor(editor, sourceCode, compiledCode) {
         // syntax highlighting
         Prism.highlightElement(srcDiv);
         Prism.highlightElement(destDiv);
+
+        // wrapLines(srcDiv);
+        // wrapLines(destDiv);
+
+        // liftStyleToLine(srcDiv, "diff-deletion");
+        // liftStyleToLine(destDiv, "diff-addition");
     }
 }

@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
         <title>Futil Demo</title>
-        <link rel="stylesheet" type="text/css" href="main.css">
         <link rel="stylesheet" type="text/css" href="style/prism-solarizedlight.css">
+        <link rel="stylesheet" type="text/css" href="main.css">
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
     </head>
@@ -18,12 +18,14 @@
             </div>
         </div>
         <div class="row">
-            <div id="passes" class="column-1"></div>
         </div>
-        <div id="diffEditor" class="editor language-futil center compact">
-            <select id="examples-select"></select>
-            <button id="compile">Compile</button>
-            <div class="row">
+        <div id="diffEditor" class="editor language-futil center">
+            <div id="editor-header" class="row center">
+                <select id="examples-select"></select>
+                <div id="passes" class="no-scrollbar"></div>
+                <button id="compile">Compile</button>
+            </div>
+            <div class="row center">
                 <pre id="input"
                      class="left"
                      contenteditable="true"

@@ -62,17 +62,17 @@ code[class*="language-"]::selection, code[class*="language-"] ::selection {
 }
 
 /* Code blocks */
-pre[class*="language-"] {
-	padding: 1em;
-	margin: .5em 0;
-	overflow: auto;
-	border-radius: 0.3em;
-}
+/* pre[class*="language-"] { */
+/* 	padding: 1em; */
+/* 	margin: .5em 0; */
+/* 	overflow: auto; */
+/* 	border-radius: 0.3em; */
+/* } */
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-	background-color: #fdf6e3; /* base3 */
-}
+/* :not(pre) > code[class*="language-"], */
+/* pre[class*="language-"] { */
+/* 	background-color: #fdf6e3; /\* base3 *\/ */
+/* } */
 
 /* Inline code */
 :not(pre) > code[class*="language-"] {

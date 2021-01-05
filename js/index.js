@@ -2,7 +2,7 @@ import * as calyx from "../rust/Cargo.toml";
 import data from "../examples/data.json";
 import passes from "../data/passes.json";
 import calyx_info from "../rust/calyx_hash.json";
-import { updateDiffEditor } from './diffEditor.js';
+import { updateDiffEditor, wrapLines } from './diffEditor.js';
 
 var button = document.getElementById("compile");
 
@@ -36,27 +36,9 @@ for (let pass of passes.passes) {
     passDiv.appendChild(button);
 }
 
-// var editor_div = document.getElementById("editor");
-// const editor = new CodeJar(
-//     editor_div,
-//     withLineNumbers(Prism.highlightElement),
-//     { tab: '\t' }
-// );
-
 button.onclick = function() {
     compile();
 };
-
-// editor.onUpdate((code) => {
-//     compile(code);
-// });
-
-// var compiled_div = document.getElementById("compiled");
-// const compiled = new CodeJar(
-//     compiled_div,
-//     withLineNumbers(Prism.highlightElement),
-//     { tab: '\t' }
-// );
 
 function getActivePasses() {
     let list = [];
@@ -68,14 +50,26 @@ function getActivePasses() {
     return list;
 }
 
+function cleanse(elem) {
+    let code = "";
+
+    code = elem.innerText;
+    // for (let line of elem.querySelectorAll(".line")) {
+    //     code += line.innerText;
+    // }
+
+    // cleanup input
+    code = code.replaceAll(/(\n+)(?=\s*\})/g, '\n');
+    code = code.replaceAll(/\n(\n+)(?=\s*group)/g, '\n\n');
+
+    return code;
+}
+
 function compile() {
     // get passes to run
     let passList = getActivePasses();
     // get the current code in the editor
-    let sourceCode = document.getElementById("input").innerText;
-    // cleanup input
-    sourceCode = sourceCode.replaceAll(/(\n+)(?=\s*\})/g, '\n');
-    sourceCode = sourceCode.replaceAll(/\n(\n+)(?=\s*group)/g, '\n\n');
+    let sourceCode = cleanse(document.getElementById("input"));
     // compile the code
     var compiledCode = calyx.run(passList, library_code, sourceCode);
 
@@ -88,7 +82,9 @@ function compile() {
 var examples_select = document.getElementById("examples-select");
 examples_select.onchange = function() {
     // editor.updateCode(examples_select.value);
-    document.getElementById("input").innerHTML = examples_select.value;
+    let input = document.getElementById("input");
+    input.innerHTML = examples_select.value;
+    // wrapLines(input);
     compile();
 };
 
