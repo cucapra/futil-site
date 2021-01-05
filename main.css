@@ -1,3 +1,14 @@
+:root {
+    --bg-color: white;
+    --dark-text-color: black;
+    --light-text-color: white;
+    --edit-code-bg: hsl(44, 87%, 94%);
+    --view-code-bg: hsl(44, 50%, 97%);
+    --border-color: rgba(0, 0, 0, 1);
+
+    --border-radius: 6px;
+}
+
 .column-1 {
     width: 100%;
     padding: 0 0.5em;
@@ -20,13 +31,16 @@
     width: max-content;
 }
 
+
+
+
 #editor-header {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: white;
-    border: 0.8px solid black;
-    border-radius: 6px;
+    background: var(--bg-color);
+    border: 0.8px solid var(--border-color);
+    border-radius: var(--border-radius);
     padding: 0.3em;
     scrollbar-width: thin;
 }
@@ -39,8 +53,8 @@
     overflow: auto;
     white-space: nowrap;
     box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, 0.14);
-    border: 0.5px solid black;
-    border-radius: 6px;
+    border: 0.5px solid var(--border-color);
+    border-radius: var(--border-radius);
     padding: 0.2em;
 }
 
@@ -68,23 +82,23 @@
     line-height: 20px;
     white-space: pre;
     padding: 0.4em 0.4em;
-    border: 0.7px solid rgba(0, 0, 0, 0.7);
+    border: 0.7px solid var(--border-color);
     width: 80%;
     overflow: auto;
 }
 
 pre.right {
     padding-left: 0.4em;
-    border-radius: 0 6px 6px 0;
-    background: hsl(44, 50%, 97%);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    background: var(--view-code-bg);
     border-left: 0.5px dashed rgba(0, 0, 0, 0.7);
     z-index: 1;
 }
 
 pre.left {
     padding-right: 0.1em;
-    border-radius: 6px 0 0 6px;
-    background: hsl(44, 87%, 94%);
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    background: var(--edit-code-bg);
     border-right: unset;
     z-index: 2;
     box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, 0.14);
@@ -110,37 +124,6 @@ span.line.diff-addition {
 
 span.line.diff-deletion {
     background: hsla(0,100%,75%,0.2);;
-}
-
-.toggle {
-    background: white;
-    color: black;
-    border: 0.5px solid #452981;
-    border-radius: 6px;
-    padding: 0.2em 0.4em;
-    margin: 0.4em;
-}
-
-.toggle:focus {
-    border-radius: 6px;
-}
-
-.toggle.on {
-    background: hsl(331, 63%, 70%);
-    color: white;
-}
-
-.toggle.off {
-    background: white;
-}
-
-.toggle.on:hover {
-    background: hsl(331, 63%, 80%);
-}
-
-.toggle.off:hover {
-    background: hsl(331, 63%, 65%);
-    color: white;
 }
 
 span.line {
