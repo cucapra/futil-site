@@ -7,14 +7,8 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers';
 function wordDiff(diff, next, srcDiv, destDiv) {
     // if diffs cover different number of lines,
     // add empty lines to compensate
-    let count = diff.count - next.count;
-    if (count > 0) {
-        // more lines in diff than next
-        destDiv.appendChild(document.createTextNode('\n'.repeat(count)));
-    } else {
-        // editorStr.appendChild(document.createTextNode('\n'.repeat(-count)));
-    }
     let wordDiff = Diff.diffWordsWithSpace(diff.value, next.value);
+    console.log(wordDiff);
     for (let change of wordDiff) {
         if (change.added == null && change.removed == null) {
             srcDiv.appendChild(document.createTextNode(change.value));
@@ -31,9 +25,25 @@ function wordDiff(diff, next, srcDiv, destDiv) {
             srcDiv.appendChild(span);
         }
     }
+
+    let count = diff.count - next.count;
+    if (count > 0) {
+        // more lines in diff than next
+        let span = document.createElement('span');
+        span.innerHTML = "\n".repeat(count);
+        span.classList = 'line diff-empty';
+        destDiv.appendChild(span);
+    } else if (count < 0) {
+        // more lines in diff than next
+        let span = document.createElement('span');
+        span.innerHTML = "\n".repeat(-count);
+        span.classList = 'line diff-empty';
+        srcDiv.appendChild(span);
+    }
 }
 
 function lineDiff(diff, srcDiv, destDiv) {
+    console.log(diff);
     // reset src and dest
     srcDiv.innerHTML = "";
     destDiv.innerHTML = "";
@@ -57,10 +67,13 @@ function lineDiff(diff, srcDiv, destDiv) {
             } else {
                 let span = document.createElement('span');
                 span.innerHTML = change.value;
-                span.classList = 'token diff-deletion';
+                span.classList = 'line diff-deletion';
                 srcDiv.appendChild(span);
                 if (change.count > 0) {
-                    destDiv.appendChild(document.createTextNode("\n".repeat(change.count)));
+                    let span = document.createElement('span');
+                    span.innerHTML = "\n".repeat(change.count);
+                    span.classList = 'line diff-empty';
+                    destDiv.appendChild(span);
                 } else {
                     // editorStr.appendChild(document.createTextNode("\n".repeat(change.count)));
                 }
@@ -69,12 +82,15 @@ function lineDiff(diff, srcDiv, destDiv) {
             // present in dest, not source
             let span = document.createElement('span');
             span.innerHTML = change.value;
-            span.classList.add('token');
+            span.classList.add('line');
             span.classList.add('diff-addition');
             destDiv.appendChild(span);
             if (change.count > 0) {
-                let commentStr = "\n".repeat(change.count);
-                srcDiv.append(document.createTextNode(commentStr));
+                let span = document.createElement('span');
+                span.contentEditable = false;
+                span.innerHTML = "\n".repeat(change.count);
+                span.classList = 'line diff-empty';
+                srcDiv.appendChild(span);
             } else {
                 // let commentStr = "\n".repeat(Math.abs(change.count));
                 // compiledStr.append(document.createTextNode(commentStr));
@@ -114,6 +130,7 @@ export function updateDiffEditor(editor, sourceCode, compiledCode) {
         // there was compilation error. show that
         destDiv.innerHTML = compiledCode;
     } else {
+        console.log(sourceCode);
         let diff = Diff.diffLines(sourceCode, compiledCode);
         lineDiff(diff, srcDiv, destDiv);
 

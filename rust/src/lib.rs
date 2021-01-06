@@ -30,6 +30,7 @@ fn compile(
     let mut pm: HashMap<String, PassClosure> = HashMap::new();
     register!(pm, WellFormed);
     register!(pm, Papercut);
+    register!(pm, Externalize);
     register!(pm, RemoveExternalMemories);
     register!(pm, CompileInvoke);
     register!(pm, CollapseControl);

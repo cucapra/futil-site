@@ -5,14 +5,14 @@
     letter-spacing: normal;
     line-height: 20px;
     white-space: pre;
-    padding: 0.4em 0.4em;
+    padding: 0.4em 0;
     border: 0.7px solid var(--border-color);
     width: 80%;
     overflow: auto;
 }
 
 pre.right {
-    padding-left: 0.4em;
+    /* padding-left: 0.4em; */
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
     background: var(--view-code-bg);
     border-left: 0.5px dashed var(--border-color);
@@ -20,7 +20,7 @@ pre.right {
 }
 
 pre.left {
-    padding-right: 0.1em;
+    /* padding-right: 0.1em; */
     border-radius: var(--border-radius) 0 0 var(--border-radius);
     background: var(--edit-code-bg);
     border-right: unset;

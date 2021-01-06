@@ -16,6 +16,11 @@
             "description": "remove-external-memories"
         },
         {
+            "name": "externalize",
+            "title": "Externalize Memories",
+            "description": "externalize"
+        },
+        {
             "name": "compile-invoke",
             "title": "Compile Invoke",
             "description": "compile-invoke"

@@ -6,7 +6,7 @@
     border: 0.5px solid #452981;
     border-radius: 6px;
     padding: 0.2em 0.4em;
-    margin: 0.4em;
+    /* margin: 0.4em; */
 }
 
 .toggle:focus {
@@ -18,11 +18,6 @@
     color: var(--light-text-color);
 }
 
-.toggle.on:hover {
-    background: hsl(331, 63%, 80%);
-}
-
-.toggle.off:hover {
-    background: hsl(331, 63%, 65%);
-    color: var(--light-text-color);
+.toggle:hover {
+    box-shadow: 0 0 1px 1px hsl(331, 63%, 65%);
 }

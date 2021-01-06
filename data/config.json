@@ -1,5 +1,5 @@
 {
-    "url_prefix": "https://raw.githubusercontent.com/cucapra/futil/master/",
+    "url_prefix": "https://raw.githubusercontent.com/cucapra/futil/",
     "categories": [
         {
             "name": "library",
@@ -24,17 +24,50 @@
                 {
                     "name": "Par",
                     "file": "tests/correctness/par.futil",
-                    "root": "/"
+                    "root": "/",
+                    "passes": [
+                        "compile-control"
+                    ]
                 },
                 {
                     "name": "If",
                     "file": "tests/correctness/if.futil",
-                    "root": "/"
+                    "root": "/",
+                    "passes": [
+                        "compile-control"
+                    ]
                 },
                 {
-                    "name": "Infer",
+                    "name": "While",
+                    "file": "tests/correctness/while.futil",
+                    "root": "/",
+                    "passes": [
+                        "compile-control"
+                    ]
+                },
+                {
+                    "name": "Invoke",
+                    "file": "tests/passes/compile-invoke.futil",
+                    "root": "/",
+                    "passes": [
+                        "compile-invoke"
+                    ]
+                },
+                {
+                    "name": "Externalize",
+                    "file": "tests/passes/externalize.futil",
+                    "root": "/",
+                    "passes": [
+                        "externalize"
+                    ]
+                },
+                {
+                    "name": "Infer Static Timing",
                     "file": "tests/passes/infer-static-timing.futil",
-                    "root": "/"
+                    "root": "/",
+                    "passes": [
+                        "infer-static-timing"
+                    ]
                 },
                 {
                     "name": "Minimize Regs",
@@ -42,6 +75,15 @@
                     "root": "/",
                     "passes": [
                         "minimize-regs",
+                        "dead-cell-removal"
+                    ]
+                },
+                {
+                    "name": "Resource Sharing",
+                    "file": "tests/passes/resource-sharing/share.futil",
+                    "root": "/",
+                    "passes": [
+                        "resource-sharing",
                         "dead-cell-removal"
                     ]
                 }

@@ -5,9 +5,14 @@ import passes from "../data/passes.json";
 import calyx_info from "../rust/calyx_hash.json";
 import { updateDiffEditor, wrapLines } from './diffEditor.js';
 import 'regenerator-runtime/runtime';
+import Prism from 'prismjs';
+import './prism-futil.js';
 
-var libraries = {};
-var currentCode = {};
+var LIBRARIES = {};
+var CURRENT_CODE = {};
+var EDIT_MODE = false;
+
+config.url_prefix = config.url_prefix + calyx_info.version;
 
 function buttonSet(pass, value) {
     pass.active = value;
@@ -57,25 +62,26 @@ document.getElementById("compile").onclick = function() {
 };
 
 function compile() {
+    EDIT_MODE = false;
     // get passes to run
     let passList = getActivePasses();
     // collect libraries into a single string
-    let libraryCode = currentCode.libraries.map(x => x.code).join("\n");
+    let libraryCode = CURRENT_CODE.libraries.map(x => x.code).join("\n");
     // compile the code
     var compiledCode = calyx.run(
         passList,
         libraryCode,
-        currentCode.code
+        CURRENT_CODE.code
     );
     // update the diff editor
     var editor = document.getElementById("diffEditor");
-    updateDiffEditor(editor, currentCode.code, compiledCode);
+    updateDiffEditor(editor, CURRENT_CODE.code, compiledCode);
 }
 
 
 async function getLibrary(library, root) {
-    if (library in libraries) {
-        return await libraries[library];
+    if (library in LIBRARIES) {
+        return await LIBRARIES[library];
     } else {
         let url = `${config.url_prefix}${root}${library}`;
         let request = await fetch(url);
@@ -89,7 +95,7 @@ async function getLibrary(library, root) {
                 code += r.code;
             }
         }
-        libraries[library] = code;
+        LIBRARIES[library] = code;
         return code;
     }
 }
@@ -119,11 +125,33 @@ async function getExample(name, root) {
 var input = document.getElementById("input");
 var output = document.getElementById("output");
 function update() {
-    input.innerHTML = currentCode.code;
+    input.innerHTML = CURRENT_CODE.code;
 }
 
+function removeDiffStyle(children) {
+    for (let node of children) {
+        if (node.classList.contains("diff-empty", "diff-deletion")) {
+            console.log(node);
+            input.removeChild(node);
+        }
+        node.classList.remove("diff-addition", "diff-deletion");
+        if (node.children.length > 0) {
+            removeDiffStyle(node.children);
+        }
+    }
+}
+
+input.onclick = function() {
+    if (!EDIT_MODE) {
+        removeDiffStyle(input.children);
+        // input.innerHTML = text;
+        output.innerHTML = "";
+        EDIT_MODE = true;
+    }
+};
+
 input.oninput = function() {
-    currentCode.code = input.innerText;
+    CURRENT_CODE.code = input.innerText;
 };
 
 
@@ -141,7 +169,7 @@ examples_select.onchange = function() {
     output.innerHTML = "loading...";
     let value = JSON.parse(examples_select.value);
     getExample(value.file, value.root)
-        .then(t => currentCode = t)
+        .then(t => CURRENT_CODE = t)
         .then(() => update())
         .then(() => selectPasses(value))
         .then(() => compile());
