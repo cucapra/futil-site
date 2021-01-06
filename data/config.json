@@ -15,19 +15,28 @@
             "items": [
                 {
                     "name": "Seq",
-                    "file": "tests/correctness/seq.futil"
+                    "file": "tests/correctness/seq.futil",
+                    "root": "/"
                 },
                 {
                     "name": "Par",
-                    "file": "tests/correctness/par.futil"
+                    "file": "tests/correctness/par.futil",
+                    "root": "/"
                 },
                 {
                     "name": "If",
-                    "file": "tests/correctness/if.futil"
+                    "file": "tests/correctness/if.futil",
+                    "root": "/"
                 },
                 {
                     "name": "Infer",
-                    "file": "tests/passes/infer-static-timing.futil"
+                    "file": "tests/passes/infer-static-timing.futil",
+                    "root": "/"
+                },
+                {
+                    "name": "Minimize Regs",
+                    "file": "tests/passes/minimize-regs/simple-liveness.futil",
+                    "root": "/"
                 }
             ]
         }
