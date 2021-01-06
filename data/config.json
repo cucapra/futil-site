@@ -63,7 +63,7 @@
                 },
                 {
                     "name": "Infer Static Timing",
-                    "file": "tests/passes/infer-static-timing.futil",
+                    "file": "tests/passes/infer-static/component.futil",
                     "root": "/",
                     "passes": [
                         "infer-static-timing"
