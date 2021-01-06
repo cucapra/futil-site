@@ -16,7 +16,10 @@
                 {
                     "name": "Seq",
                     "file": "tests/correctness/seq.futil",
-                    "root": "/"
+                    "root": "/",
+                    "passes": [
+                        "compile-control"
+                    ]
                 },
                 {
                     "name": "Par",
@@ -36,7 +39,11 @@
                 {
                     "name": "Minimize Regs",
                     "file": "tests/passes/minimize-regs/simple-liveness.futil",
-                    "root": "/"
+                    "root": "/",
+                    "passes": [
+                        "minimize-regs",
+                        "dead-cell-removal"
+                    ]
                 }
             ]
         }

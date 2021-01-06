@@ -6,9 +6,17 @@ import calyx_info from "../rust/calyx_hash.json";
 import { updateDiffEditor, wrapLines } from './diffEditor.js';
 import 'regenerator-runtime/runtime';
 
-var button = document.getElementById("compile");
 var libraries = {};
 var currentCode = {};
+
+function buttonSet(pass, value) {
+    pass.active = value;
+    if (value) {
+        pass.button.classList.replace("off", "on");
+    } else {
+        pass.button.classList.replace("on", "off");
+    }
+}
 
 function createToggle(pass) {
     let button = document.createElement("button");
@@ -16,13 +24,7 @@ function createToggle(pass) {
     button.classList.add("off");
     button.innerHTML = pass.title;
     button.onclick = function() {
-        if (button.classList.contains("on")) {
-            button.classList.replace("on", "off");
-            pass.active = false;
-        } else {
-            button.classList.replace("off", "on");
-            pass.active = true;
-        }
+        buttonSet(pass, !pass.active);
         compile();
     };
     return button;
@@ -31,32 +33,35 @@ function createToggle(pass) {
 let passDiv = document.getElementById("passes");
 for (let pass of passes.passes) {
     let button = createToggle(pass);
+    pass.button = button;
     passDiv.appendChild(button);
 }
 
 function getActivePasses() {
-    let list = [];
-    for (let p of passes.passes) {
-        if (p.active) {
-            list.push(p.name);
-        }
-    }
     return passes.passes
         .filter(p => p.active)
         .map(p => p.name);
 }
 
-button.onclick = function() {
+function selectPasses(item) {
+    if ("passes" in item) {
+        for (let p of passes.passes) {
+            buttonSet(p, item.passes.includes(p.name));
+        }
+    }
+}
+
+
+document.getElementById("compile").onclick = function() {
     compile();
 };
 
 function compile() {
     // get passes to run
     let passList = getActivePasses();
-    // // get the current code in the editor
-    // let sourceCode = cleanse(document.getElementById("input"));
-    // compile the code
+    // collect libraries into a single string
     let libraryCode = currentCode.libraries.map(x => x.code).join("\n");
+    // compile the code
     var compiledCode = calyx.run(
         passList,
         libraryCode,
@@ -138,6 +143,7 @@ examples_select.onchange = function() {
     getExample(value.file, value.root)
         .then(t => currentCode = t)
         .then(() => update())
+        .then(() => selectPasses(value))
         .then(() => compile());
     // wrapLines(input);
 };
