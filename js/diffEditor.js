@@ -8,7 +8,6 @@ function wordDiff(diff, next, srcDiv, destDiv) {
     // if diffs cover different number of lines,
     // add empty lines to compensate
     let wordDiff = Diff.diffWordsWithSpace(diff.value, next.value);
-    console.log(wordDiff);
     for (let change of wordDiff) {
         if (change.added == null && change.removed == null) {
             srcDiv.appendChild(document.createTextNode(change.value));
@@ -43,7 +42,6 @@ function wordDiff(diff, next, srcDiv, destDiv) {
 }
 
 function lineDiff(diff, srcDiv, destDiv) {
-    console.log(diff);
     // reset src and dest
     srcDiv.innerHTML = "";
     destDiv.innerHTML = "";
@@ -99,28 +97,25 @@ function lineDiff(diff, srcDiv, destDiv) {
     }
 }
 
-export function wrapLines(elem) {
-    let text = elem.innerHTML + "\n";
-    let html = text.matchAll(/^.*\n/mg);
-    // console.log(Array.from(html));
-    // html = text.matchAll(/^.*\n/mg);
-    elem.innerHTML = "";
-    for (let line of html) {
-        let span = document.createElement("span");
-        span.innerHTML = line;
-        span.classList.add("line");
-        elem.appendChild(span);
-    }
-}
+// export function wrapLines(elem) {
+//     let text = elem.innerHTML + "\n";
+//     let html = text.matchAll(/^.*\n/mg);
+//     elem.innerHTML = "";
+//     for (let line of html) {
+//         let span = document.createElement("span");
+//         span.innerHTML = line;
+//         span.classList.add("line");
+//         elem.appendChild(span);
+//     }
+// }
 
-function liftStyleToLine(elem, style) {
-    for (let span of elem.querySelectorAll(".line")) {
-        // console.log(span);
-        if (span.innerHTML.includes(style)) {
-            span.classList.add(style);
-        }
-    }
-}
+// function liftStyleToLine(elem, style) {
+//     for (let span of elem.querySelectorAll(".line")) {
+//         if (span.innerHTML.includes(style)) {
+//             span.classList.add(style);
+//         }
+//     }
+// }
 
 export function updateDiffEditor(editor, sourceCode, compiledCode) {
     let srcDiv = editor.querySelector("#input");
@@ -130,7 +125,6 @@ export function updateDiffEditor(editor, sourceCode, compiledCode) {
         // there was compilation error. show that
         destDiv.innerHTML = compiledCode;
     } else {
-        console.log(sourceCode);
         let diff = Diff.diffLines(sourceCode, compiledCode);
         lineDiff(diff, srcDiv, destDiv);
 

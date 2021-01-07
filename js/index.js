@@ -1,12 +1,9 @@
 import * as calyx from "../rust/Cargo.toml";
-// import data from "../data/examples.json";
 import config from "../data/config.json";
 import passes from "../data/passes.json";
 import calyx_info from "../rust/calyx_hash.json";
-import { updateDiffEditor, wrapLines } from './diffEditor.js';
+import { updateDiffEditor } from './diffEditor.js';
 import 'regenerator-runtime/runtime';
-import Prism from 'prismjs';
-import './prism-futil.js';
 
 var LIBRARIES = {};
 var CURRENT_CODE = {};
@@ -131,7 +128,6 @@ function update() {
 function removeDiffStyle(children) {
     for (let node of children) {
         if (node.classList.contains("diff-empty", "diff-deletion")) {
-            console.log(node);
             input.removeChild(node);
         }
         node.classList.remove("diff-addition", "diff-deletion");
@@ -144,7 +140,6 @@ function removeDiffStyle(children) {
 input.onclick = function() {
     if (!EDIT_MODE) {
         removeDiffStyle(input.children);
-        // input.innerHTML = text;
         output.innerHTML = "";
         EDIT_MODE = true;
     }
@@ -152,14 +147,6 @@ input.onclick = function() {
 
 input.oninput = function() {
     CURRENT_CODE.code = input.innerText;
-};
-
-
-
-var lib_select = document.getElementById("library-select");
-lib_select.onchange = function() {
-    // library_code = getExample(lib_select.value);
-    // console.log("hi");
 };
 
 // var examples_box = document.getElementById("examples");
