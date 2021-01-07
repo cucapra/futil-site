@@ -70,8 +70,17 @@
                     ]
                 },
                 {
-                    "name": "Minimize Regs",
+                    "name": "Minimize Regs Simple",
                     "file": "tests/passes/minimize-regs/simple-liveness.futil",
+                    "root": "/",
+                    "passes": [
+                        "minimize-regs",
+                        "dead-cell-removal"
+                    ]
+                },
+                {
+                    "name": "Minimize Regs (Nested Par)",
+                    "file": "tests/passes/minimize-regs/nested-par.futil",
                     "root": "/",
                     "passes": [
                         "minimize-regs",
