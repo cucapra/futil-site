@@ -1,0 +1,3 @@
+[submodule "landing/themes/beautifulhugo"]
+	path = landing/themes/beautifulhugo
+	url = git@github.com:halogenica/beautifulhugo

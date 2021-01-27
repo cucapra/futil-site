@@ -1,0 +1,6 @@
+./static/js/bundle.js
+node_modules
+public/
+bundle.js
+dahlia-fastopt.js
+static/js/bundle.js
