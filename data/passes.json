@@ -11,11 +11,6 @@
             "description": "papercut"
         },
         {
-            "name": "remove-external-memories",
-            "title": "Remove External Memories",
-            "description": "remove-external-memories"
-        },
-        {
             "name": "externalize",
             "title": "Externalize Memories",
             "description": "externalize"

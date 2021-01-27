@@ -31,7 +31,6 @@ fn compile(
     register!(pm, WellFormed);
     register!(pm, Papercut);
     register!(pm, Externalize);
-    register!(pm, RemoveExternalMemories);
     register!(pm, CompileInvoke);
     register!(pm, CollapseControl);
     register!(pm, CompileControl);
