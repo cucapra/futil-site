@@ -12,48 +12,119 @@
     </div>
 
     <div class="row">
+        <h2>Language</h2>
+        <div class="col-xs-offset-0 col-xs-12 col-md-offset-1 col-md-4">
+            <h3>Components</h3>
+            Components are the basic building block of Calyx programs. A component
+            has three sections: <em>cells</em>, <em>wires</em>, and <em>control</em>.
+            An empty component does nothing.
+        </div>
+		    <div id="component-editor" class="input col-xs-offset-0 col-xs-11 col-md-offset-0 col-md-5"></div>
     </div>
 
     <div class="row">
-    <div role="group" class="col-xs-offset-0 col-xs-12 col-md-offset-1 col-md-4" style="margin-top: 10px;">
-    <table id="table-examples" class="table">
-
-    <thead>
-     <tr>
-      <th colspan="2">
-      <button type="button" class="btn btn-success btn-block" disabled >
-        Examples
-      </button>
-      </th>
-    </tr>
-    </thead>
-
-    <tbody id='examples'>
-    </tbody>
-
-    </table>
-    </div>
-
-		<div id="editor" class="input col-xs-offset-0 col-xs-11 col-md-offset-0 col-md-5"></div>
+		    <div id="cells-editor" class="input col-xs-offset-0 col-xs-11 col-md-offset-0 col-md-5"></div>
+        <div class="col-xs-offset-0 col-xs-12 col-md-offset-1 col-md-4">
+            <h3>Instantiating Hardware</h3>
+            The <em>cells</em> section instantiates sub-components like adders and registers.
+            These sub-components can be used in this component to define behaviour.
+        </div>
     </div>
 
     <div class="row">
-    <div class="col-md-offset-2 col-md-2 col-xs-offset-3 col-xs-6 align-items-center">
-      <button type="button" class="btn btn-info btn-block" onclick="compile()">
-        Compile
-      </button>
-    </div>
+        <div class="col-xs-offset-0 col-xs-12 col-md-offset-1 col-md-4">
+            <h3>Continuous Assignments</h3>
+            The <em>wires</em> section defines connections between hardware sub-components.
+            The assignments are <em>non-blocking</em>, which means that left hand side updates as soon as the right hand side does.
+        </div>
+		    <div id="assginment-editor" class="input col-xs-offset-0 col-xs-11 col-md-offset-0 col-md-5"></div>
     </div>
 
     <div class="row">
-    <div class="col-md-offset-1 col-md-4 col-xs-offset-0 col-xs-12" style="margin-top: 10px;">
-    <h3>Explanation</h3>
-    <h5 id="example-name"></h5>
-    <p id="explain">
-    </p>
+		    <div id="guarded-assignment-editor" class="input col-xs-offset-0 col-xs-11 col-md-offset-0 col-md-5"></div>
+        <div class="col-xs-offset-0 col-xs-12 col-md-offset-1 col-md-4">
+            <h3>Guarded Assignments</h3>
+            Assignments can be <em>guarded</em> such that they are only activated when
+            the condition is true. For example, in this case, the value on
+            <code>add.left</code> is 0 when <code>cmp.out</code> is true and 1 otherwise.
+        </div>
     </div>
-    <div id="result" class="output col-md-offset-0 col-md-5 col-xs-offset-1 col-xs-11"></div>
+
+    <div class="row">
+        <div class="col-xs-offset-0 col-xs-12 col-md-offset-1 col-md-4">
+            <h3>Groups</h3>
+            <p>
+                Groups provide a name to a group of assignments that implement some action.
+                For example <code>incr_reg</code> increments the value in <code>r</code>. Groups also
+                define a <em>done</em> assignment which becomes true when the group has finished
+                its action.
+            </p>
+
+            <p>
+                Groups provide <em>encapsulation</em>: multiple groups can drive the same ports on
+                hardware components without reasoning about assignments in other groups.
+                Optimizations and analyses can therefore reason about individual groups instead
+                of all assignments.
+            </p>
+        </div>
+		    <div id="groups-editor" class="input col-xs-offset-0 col-xs-11 col-md-offset-0 col-md-5"></div>
     </div>
+
+    <div class="row">
+		    <div id="control-editor" class="input col-xs-offset-0 col-xs-11 col-md-offset-0 col-md-5"></div>
+        <div class="col-xs-offset-0 col-xs-12 col-md-offset-1 col-md-4">
+            <h3>Control</h3>
+            The <em>control</em> specifies the execution schedule of a component in terms
+            of groups.
+            In this example, the <code>seq</code> operator executes groups in a sequence.
+
+            Groups and control can simplify specification of hardware programs while
+            making analysis easier.
+            This implementation of the counter uses the <code>while</code> control operator
+            to specify the behavior of a counter.
+        </div>
+    </div>
+
+    <!-- <div class="row"> -->
+        <!-- <div role="group" class="col-xs-offset-0 col-xs-12 col-md-offset-1 col-md-4" style="margin-top: 10px;">
+             <table id="table-examples" class="table">
+
+             <thead>
+             <tr>
+             <th colspan="2">
+             <button type="button" class="btn btn-success btn-block" disabled >
+             Examples
+             </button>
+             </th>
+             </tr>
+             </thead>
+
+             <tbody id='examples'>
+             </tbody>
+
+             </table>
+             </div> -->
+
+		    <!-- <div id="editor" class="input col-xs-offset-0 col-xs-11 col-md-offset-0 col-md-5"></div> -->
+        <!-- </div> -->
+
+    <!-- <div class="row">
+         <div class="col-md-offset-2 col-md-2 col-xs-offset-3 col-xs-6 align-items-center">
+         <button type="button" class="btn btn-info btn-block" onclick="compile()">
+         Compile
+         </button>
+         </div>
+         </div>
+
+         <div class="row">
+         <div class="col-md-offset-1 col-md-4 col-xs-offset-0 col-xs-12" style="margin-top: 10px;">
+         <h3>Explanation</h3>
+         <h5 id="example-name"></h5>
+         <p id="explain">
+         </p>
+         </div>
+         <div id="result" class="output col-md-offset-0 col-md-5 col-xs-offset-1 col-xs-11"></div>
+         </div> -->
 
 
     <!-- Scripts to load -->

@@ -63,7 +63,7 @@ unsafe= true
 
 [[menu.main]]
     name = "Code"
-    url = "https://github.com/cucapra/futil"
+    url = "https://github.com/cucapra/calyx"
     weight = 30
 
 [[menu.main]]
