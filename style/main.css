@@ -7,6 +7,9 @@
     --border-color: rgba(0, 0, 0, 0.5);
 
     --border-radius: 4px;
+
+    --highlight: #7c9d31;
+    --secondary-highlight: #92b93b;
 }
 
 body {
@@ -30,14 +33,37 @@ body {
 }
 
 #passes {
-    overflow: auto;
-    white-space: nowrap;
-    box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, 0.14);
-    border: 0.5px solid var(--border-color);
-    border-radius: var(--border-radius);
+    flex-direction: column;
+    align-items: center;
+    width: 10%;
+    /* overflow: auto; */
+    /* white-space: nowrap; */
+    /* box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, 0.14); */
+    /* border: 0.5px solid var(--border-color); */
+    /* border-radius: var(--border-radius); */
     padding: 0.2em;
+}
+
+#passes button {
+    margin: 0.2em auto;
+    width: 100%;
 }
 
 #compile {
     margin-left: auto;
+}
+
+#editor {
+    /* flex-grow: 1; */
+    width: 50em;
+    height: 50em;
+    position: relative;
+}
+
+/* #editor pre { */
+/*     height: 100%; */
+/* } */
+
+.acediff__diffLine {
+    background-color: white;
 }
